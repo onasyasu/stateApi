@@ -6,50 +6,57 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/state")
 public class StateRestController {
 
-    private State state = new State("A");
+    private State clickState = new State("A");
 
-    @RequestMapping(method = RequestMethod.GET)
-    public String steate() {
-        return "dafalut state";
-    }
+    private State soundState = new State("Undefined");
 
-
-    @RequestMapping(method = RequestMethod.GET, value = "{id}")    // f
+    @RequestMapping(method = RequestMethod.GET, value = "{id}")
     public String getCustomer(@PathVariable String id) {
         switch (id) {
-            //Aさんが叩いて
-            case "A":
-                //状態がAなら
-                if(state.getState().equals("A")) {
-                    state.setState("R");
+            //Aさんが音を流される状況かどうか.cronで常に叩かれる
+            case "getSoundableUserA":
+                if (soundState.getState().equals("A")) {
+                    soundState.setState("Undefined");
                     return "true\n";
                 } else {
                     return "false\n";
                 }
-            case "B":
-                //状態がBなら
-                if(state.getState().equals("B" +
-                        "" +
-                        "")) {
-                    state.setState("R");
+            case "getSoundableUserB":
+                if (soundState.getState().equals("B")) {
+                    soundState.setState("Undefined");
                     return "true\n";
                 } else {
                     return "false\n";
                 }
-             //AのRunnningが終了になったら
-            case "endRA":
-                    state.setState("A");
-                    return "update";
-            //BのRunnningが終了になったら
-            case "endRB":
-                state.setState("B");
-                return "update";
-
+                //Aさんがクリックできる状況かどうか.dashButtonが押されたときに起動
+            case "clickableA":
+                if (clickState.getState().equals("A")) {
+                    //Bさんの音が流れる状態
+                    soundState.setState("B");
+                    return "true\n";
+                } else {
+                    return "false\n";
+                }
+            case "clickableB":
+                if (clickState.getState().equals("B")) {
+                    soundState.setState("A");
+                    return "true\n";
+                } else {
+                    return "false\n";
+                }
+                //Aさんが走り終えました.走り終わったときに叩かれる
+            case "endRunA":
+                soundState.setState("Undefined");
+                return "soundStateUpdated\n";
+            case "endRunB":
+                soundState.setState("Undefined");
+                return "soundStateUpdated\n";
             default:
                 return "badRequest\n";
         }
     }
 }
+
 class State {
     private String state;
 
