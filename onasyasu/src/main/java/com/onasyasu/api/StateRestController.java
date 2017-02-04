@@ -12,6 +12,7 @@ public class StateRestController {
 
     @RequestMapping(method = RequestMethod.GET, value = "{id}")
     public String getCustomer(@PathVariable String id) {
+        System.out.println("Request :"+id);
         switch (id) {
             //Aさんが音を流される状況かどうか.cronで常に叩かれる
             case "getSoundableUserA":
@@ -47,9 +48,11 @@ public class StateRestController {
                 //Aさんが走り終えました.走り終わったときに叩かれる
             case "endRunA":
                 soundState.setState("Undefined");
+                clickState.setState("B");
                 return "soundStateUpdated\n";
             case "endRunB":
                 soundState.setState("Undefined");
+                clickState.setState("A");
                 return "soundStateUpdated\n";
             default:
                 return "badRequest\n";
