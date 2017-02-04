@@ -2,6 +2,9 @@ package com.onasyasu.api;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/state")
 public class StateRestController {
@@ -9,6 +12,18 @@ public class StateRestController {
     private State clickState = new State("A");
 
     private State soundState = new State("Undefined");
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<ResponseJson> getCustomer() {
+        List list = new ArrayList<>();
+        ResponseJson responseJsonClick = new ResponseJson("clickState",clickState.getState());
+        ResponseJson responseJsonSound = new ResponseJson("soundState",soundState.getState());
+
+        list.add(responseJsonClick);
+        list.add(responseJsonSound);
+
+        return list;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "{id}")
     public String getCustomer(@PathVariable String id) {
@@ -73,5 +88,31 @@ class State {
 
     public void setState(String state) {
         this.state = state;
+    }
+}
+
+class ResponseJson {
+    private String state;
+    private String stateType;
+
+    public ResponseJson(String state, String stateType) {
+        this.state = state;
+        this.stateType = stateType;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getStateType() {
+        return stateType;
+    }
+
+    public void setStateType(String stateType) {
+        this.stateType = stateType;
     }
 }
