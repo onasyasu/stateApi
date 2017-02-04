@@ -63,11 +63,11 @@ public class StateRestController {
                 //Aさんが走り終えました.走り終わったときに叩かれる
             case "endRunA":
                 soundState.setState("Undefined");
-                clickState.setState("B");
+                clickState.setState("A");
                 return "soundStateUpdated\n";
             case "endRunB":
                 soundState.setState("Undefined");
-                clickState.setState("A");
+                clickState.setState("B");
                 return "soundStateUpdated\n";
             default:
                 return "badRequest\n";
