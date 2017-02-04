@@ -1,4 +1,12 @@
 # stateApi
+# deploy 
+```
+cf push state-api -p target/onasyasu-0.0.1-SNAPSHOT.jar
+```
+# curl
+```
+curl http://state-api.au-syd.mybluemix.net/state/clickableA
+```
 # 
 ```
 //Aさんが音を流される状況かどうか.cronで常に叩かれる
