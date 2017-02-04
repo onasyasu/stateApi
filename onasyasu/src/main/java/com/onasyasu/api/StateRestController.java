@@ -15,26 +15,38 @@ public class StateRestController {
 
 
     @RequestMapping(method = RequestMethod.GET, value = "{id}")    // f
-    public String getCustomer(@PathVariable char id) {
+    public String getCustomer(@PathVariable String id) {
         switch (id) {
             //Aさんが叩いて
-            case 'A':
+            case "A":
                 //状態がAなら
                 if(state.getState().equals("A")) {
-                    state.setState("B");
-                    return "true";
+                    state.setState("R");
+                    return "true\n";
                 } else {
-                    return "false";
+                    return "false\n";
                 }
-            case 'B':
-                if(state.getState().equals("B")) {
+            case "B":
+                //状態がBなら
+                if(state.getState().equals("B" +
+                        "" +
+                        "")) {
+                    state.setState("R");
+                    return "true\n";
+                } else {
+                    return "false\n";
+                }
+             //AのRunnningが終了になったら
+            case "endRA":
                     state.setState("A");
-                    return "true";
-                } else {
-                    return "false";
-                }
+                    return "update";
+            //BのRunnningが終了になったら
+            case "endRB":
+                state.setState("B");
+                return "update";
+
             default:
-                return "badRequest";
+                return "badRequest\n";
         }
     }
 }
